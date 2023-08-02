@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.explore.dto.EndpointHitRequestDto;
 import ru.practicum.explore.dto.EndpointHitResponseDto;
 import ru.practicum.explore.dto.EndpointHitSavedDto;
+import ru.practicum.explore.model.App;
 import ru.practicum.explore.model.EndpointHit;
 import ru.practicum.explore.repository.HitRepository;
 import ru.practicum.explore.repository.StatsRepository;
@@ -45,7 +46,7 @@ public class StatsServiceTest {
 
         savedEndpointHit = EndpointHit.builder()
                 .id(1L)
-                .app(endpointHitRequestDto.getApp())
+                .app(new App(endpointHitRequestDto.getApp()))
                 .uri(endpointHitRequestDto.getUri())
                 .ip(endpointHitRequestDto.getIp())
                 .timestamp(endpointHitRequestDto.getTimestamp())
@@ -54,7 +55,7 @@ public class StatsServiceTest {
 
         endpointHitSavedDto = EndpointHitSavedDto.builder()
                 .id(savedEndpointHit.getId())
-                .app(savedEndpointHit.getApp())
+                .app(savedEndpointHit.getApp().getAppName())
                 .uri(savedEndpointHit.getUri())
                 .ip(savedEndpointHit.getIp())
                 .timestamp(savedEndpointHit.getTimestamp())
@@ -74,7 +75,7 @@ public class StatsServiceTest {
     public void getHitsAllWithUriList_Normal() {
         List<EndpointHitResponseDto> hits = new ArrayList<>();
         EndpointHitResponseDto hit = EndpointHitResponseDto.builder()
-                .app(savedEndpointHit.getApp())
+                .app(savedEndpointHit.getApp().getAppName())
                 .uri(savedEndpointHit.getUri())
                 .hits(1)
                 .build();
@@ -93,7 +94,7 @@ public class StatsServiceTest {
     public void getHitsAllUriListNull_Normal() {
         List<EndpointHitResponseDto> hits = new ArrayList<>();
         EndpointHitResponseDto hit = EndpointHitResponseDto.builder()
-                .app(savedEndpointHit.getApp())
+                .app(savedEndpointHit.getApp().getAppName())
                 .uri(null)
                 .hits(1)
                 .build();
@@ -112,7 +113,7 @@ public class StatsServiceTest {
     public void getHitsUnique_Normal() {
         List<EndpointHitResponseDto> hits = new ArrayList<>();
         EndpointHitResponseDto hit = EndpointHitResponseDto.builder()
-                .app(savedEndpointHit.getApp())
+                .app(savedEndpointHit.getApp().getAppName())
                 .uri(savedEndpointHit.getUri())
                 .hits(1)
                 .build();
@@ -131,7 +132,7 @@ public class StatsServiceTest {
     public void getHitsUniqueUriListNull_Normal() {
         List<EndpointHitResponseDto> hits = new ArrayList<>();
         EndpointHitResponseDto hit = EndpointHitResponseDto.builder()
-                .app(savedEndpointHit.getApp())
+                .app(savedEndpointHit.getApp().getAppName())
                 .uri(null)
                 .hits(1)
                 .build();

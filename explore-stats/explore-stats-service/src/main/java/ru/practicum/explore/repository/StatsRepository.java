@@ -2,16 +2,11 @@ package ru.practicum.explore.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.practicum.explore.dto.EndpointHitResponseDto;
-import ru.practicum.explore.model.EndpointHit;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,8 +25,9 @@ public class StatsRepository {
 
     public List<EndpointHitResponseDto> getUniqueHitsByUri(LocalDateTime start, LocalDateTime end, List<String> uriList) {
         log.info("Getting unique endpoints hit from {} to {} for the uris: {}", start, end, uriList);
-        String sql = "SELECT eh.app as app, eh.uri as uri, COUNT(DISTINCT eh.ip) as hits FROM endpoint_hit as eh " +
-                "WHERE eh.sent BETWEEN :start AND :end AND eh.uri IN (:uriList) GROUP BY eh.app, eh.uri ORDER BY hits DESC";
+        String sql = "SELECT a.app_name as app, eh.uri as uri, COUNT(DISTINCT eh.ip) as hits FROM endpoint_hit as eh " +
+                "LEFT JOIN app as a ON eh.app_id = a.app_id WHERE eh.sent BETWEEN :start AND :end AND eh.uri " +
+                "IN (:uriList) GROUP BY a.app_name, eh.uri ORDER BY hits DESC";
         SqlParameterSource parameterSource = new MapSqlParameterSource("uriList", uriList)
                 .addValue("start", start)
                 .addValue("end", end);
@@ -43,8 +39,13 @@ public class StatsRepository {
 
     public List<EndpointHitResponseDto> getAllHitsByUri(LocalDateTime start, LocalDateTime end, List<String> uriList) {
         log.info("Getting all endpoints hit from {} to {} for the uris: {}", start, end, uriList);
-            String sql = "SELECT eh.app as app, eh.uri as uri, COUNT(eh.ip) as hits FROM endpoint_hit as eh WHERE " +
-                    "eh.sent BETWEEN :start AND :end AND eh.uri IN (:uriList) GROUP BY eh.app, eh.uri ORDER BY hits DESC";
+
+        String sql = "SELECT a.app_name as app, eh.uri as uri, COUNT(eh.ip) as hits FROM endpoint_hit as eh " +
+                "LEFT JOIN app as a ON eh.app_id = a.app_id WHERE eh.sent BETWEEN :start AND :end AND eh.uri " +
+                "IN (:uriList) GROUP BY a.app_name, eh.uri ORDER BY hits DESC";
+
+/*        String sql = "SELECT eh.app as app, eh.uri as uri, COUNT(eh.ip) as hits FROM endpoint_hit as eh WHERE " +
+                "eh.sent BETWEEN :start AND :end AND eh.uri IN (:uriList) GROUP BY eh.app, eh.uri ORDER BY hits DESC";*/
         SqlParameterSource parameterSource = new MapSqlParameterSource("uriList", uriList)
                 .addValue("start", start)
                 .addValue("end", end);
@@ -56,8 +57,9 @@ public class StatsRepository {
 
     public List<EndpointHitResponseDto> getAllHits(LocalDateTime start, LocalDateTime end) {
         log.info("Getting all endpoints hit from {} to {}.", start, end);
-        String sql = "SELECT eh.app as app, eh.uri as uri, COUNT(eh.ip) as hits FROM endpoint_hit as eh WHERE " +
-                "eh.sent BETWEEN :start AND :end GROUP BY eh.app, eh.uri ORDER BY hits DESC";
+        String sql = "SELECT a.app_name as app, eh.uri as uri, COUNT(eh.ip) as hits FROM endpoint_hit as eh " +
+                "LEFT JOIN app as a ON eh.app_id = a.app_id WHERE eh.sent BETWEEN :start AND :end " +
+                "GROUP BY a.app_name, eh.uri ORDER BY hits DESC";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("start", start)
                 .addValue("end", end);
@@ -69,8 +71,9 @@ public class StatsRepository {
 
     public List<EndpointHitResponseDto> getUniqueHits(LocalDateTime start, LocalDateTime end) {
         log.info("Getting unique endpoints hit from {} to {}.", start, end);
-        String sql = "SELECT eh.app as app, eh.uri as uri, COUNT(DISTINCT eh.ip) as hits FROM endpoint_hit as eh " +
-                "WHERE eh.sent BETWEEN :start AND :end GROUP BY eh.app, eh.uri ORDER BY hits DESC";
+        String sql = "SELECT a.app_name as app, eh.uri as uri, COUNT(DISTINCT eh.ip) as hits FROM endpoint_hit as eh " +
+                "LEFT JOIN app as a ON eh.app_id = a.app_id WHERE eh.sent BETWEEN :start AND :end " +
+                "GROUP BY a.app_name, eh.uri ORDER BY hits DESC";
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("start", start)
                 .addValue("end", end);

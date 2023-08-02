@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.jdbc.JdbcTestUtils;
 import ru.practicum.explore.dto.EndpointHitResponseDto;
+import ru.practicum.explore.model.App;
 import ru.practicum.explore.model.EndpointHit;
 
 import java.time.LocalDateTime;
@@ -38,7 +39,7 @@ public class StatsRepositoryTest {
 
     public void init() {
         endpointHit1 = EndpointHit.builder()
-                .app("app")
+                .app(new App("app"))
                 .uri("/uri")
                 .ip("192.168.1.1")
                 .timestamp(LocalDateTime.now())
@@ -46,7 +47,7 @@ public class StatsRepositoryTest {
         hitRepository.addHit(endpointHit1);
 
         endpointHit2 = EndpointHit.builder()
-                .app("app")
+                .app(new App("app"))
                 .uri("/uri")
                 .ip("192.168.1.2")
                 .timestamp(LocalDateTime.now().minusHours(1))
@@ -57,7 +58,7 @@ public class StatsRepositoryTest {
     @Test
     public void getAllHitsByUri_Normal() {
         EndpointHitResponseDto hit1 = EndpointHitResponseDto.builder()
-                .app(endpointHit1.getApp())
+                .app(endpointHit1.getApp().getAppName())
                 .uri(endpointHit1.getUri())
                 .hits(1)
                 .build();
@@ -75,7 +76,7 @@ public class StatsRepositoryTest {
     @Test
     public void getUniqueHitsByUri_Normal() {
         EndpointHitResponseDto hit1 = EndpointHitResponseDto.builder()
-                .app(endpointHit1.getApp())
+                .app(endpointHit1.getApp().getAppName())
                 .uri(endpointHit1.getUri())
                 .hits(1)
                 .build();
@@ -92,7 +93,7 @@ public class StatsRepositoryTest {
     @Test
     public void getUniqueHits_Normal() {
         EndpointHitResponseDto hit1 = EndpointHitResponseDto.builder()
-                .app(endpointHit1.getApp())
+                .app(endpointHit1.getApp().getAppName())
                 .uri(endpointHit1.getUri())
                 .hits(1)
                 .build();
@@ -107,7 +108,7 @@ public class StatsRepositoryTest {
     @Test
     public void getAllHits_Normal() {
         EndpointHitResponseDto hit1 = EndpointHitResponseDto.builder()
-                .app(endpointHit1.getApp())
+                .app(endpointHit1.getApp().getAppName())
                 .uri(endpointHit1.getUri())
                 .hits(1)
                 .build();

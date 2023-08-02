@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class EndpointHit {
     private Long id;
-    private String app;
+    private App app;
     private String uri;
     private String ip;
     private LocalDateTime timestamp;
