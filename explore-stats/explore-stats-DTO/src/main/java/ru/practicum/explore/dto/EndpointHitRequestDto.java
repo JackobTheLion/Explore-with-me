@@ -24,7 +24,7 @@ public class EndpointHitRequestDto {
     private String uri;
 
     @NotBlank(message = "IP cannot be blank")
-    @Ip(message = "Invalid IP")
+    //@Ip(message = "Invalid IP")
     private String ip;
 
     @NotNull(message = "Timestamp cannot be blank")
