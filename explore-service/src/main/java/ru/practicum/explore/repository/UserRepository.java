@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Page<User> findByIdInOrderById(List<Long> ids, PageRequest page);
 
+    Page<User> findAllByOrderById(PageRequest page);
+
 }

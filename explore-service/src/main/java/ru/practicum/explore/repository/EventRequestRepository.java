@@ -5,7 +5,6 @@ import ru.practicum.explore.model.ParticipationRequest;
 import ru.practicum.explore.model.ParticipationRequestStatus;
 
 import java.util.List;
-import java.util.Map;
 
 public interface EventRequestRepository extends JpaRepository<ParticipationRequest, Long> {
     List<ParticipationRequest> findAllByEventId(Long eventId);

@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.explore.model.ParticipationRequestStatus;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Data

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
-public abstract class  UpdateEvent {
+public abstract class UpdateEvent {
     @Size(min = 20, max = 2000)
     protected String annotation;
 

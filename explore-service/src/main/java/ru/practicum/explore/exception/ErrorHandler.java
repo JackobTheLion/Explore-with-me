@@ -47,7 +47,8 @@ public class ErrorHandler {
             EmailOrNameRegisteredException.class,
             CategoryExistsException.class,
             CannotDeleteCategoryException.class,
-            AccessDeniedException.class})
+            AccessDeniedException.class,
+            RequestCannotBeUpdatedException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleEventUpdateImpossible(RuntimeException e) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, "Incorrectly made request.", e.getMessage());

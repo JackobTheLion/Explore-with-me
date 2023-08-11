@@ -68,7 +68,7 @@ public class UserService {
     private List<User> findAllUsers(Integer from, Integer size) {
         log.info("Looking for all users from {}, size {}.", from, size);
         final PageRequest page = PageRequest.of(from > 0 ? from / size : 0, size);
-        List<User> allUsers = userRepository.findAll(page).getContent();
+        List<User> allUsers = userRepository.findAllByOrderById(page).getContent();
         log.info("Users found: {}.", allUsers);
         return allUsers;
     }

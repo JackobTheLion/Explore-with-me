@@ -4,7 +4,6 @@ import ru.practicum.explore.dto.participation.EventRequestStatusUpdateResult;
 import ru.practicum.explore.dto.participation.ParticipationRequestDto;
 import ru.practicum.explore.model.ParticipationRequest;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 

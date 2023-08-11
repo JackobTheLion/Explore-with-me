@@ -74,7 +74,10 @@ public class CompilationService {
     public List<CompilationDto> findAll(Boolean pinned, Integer from, Integer size) {
         log.info("Getting all compilations");
         final PageRequest page = PageRequest.of(from > 0 ? from / size : 0, size);
-        List<Compilation> compilations = compilationRepository.findByPinned(pinned, page).getContent();
+        List<Compilation> compilations;
+        if (pinned == null) {
+            compilations = compilationRepository.findAll(page).getContent();
+        } else compilations = compilationRepository.findByPinned(pinned, page).getContent();
         log.info("Compilations found: {}", compilations);
         return compilations.stream().map(this::mapCompilationToDto).collect(Collectors.toList());
     }
@@ -104,10 +107,12 @@ public class CompilationService {
 
     private CompilationDto mapCompilationToDto(Compilation compilation) {
         CompilationDto compilationDto = CompilationMapper.mapToDto(compilation);
-        List<EventShortDto> eventShortDto = compilation.getEvents().stream()
-                .map(EventMapper::mapToShortDto)
-                .collect(Collectors.toList());
-        compilationDto.setEvents(statService.setViewsNumber(eventShortDto));
+        if (!compilation.getEvents().isEmpty()) {
+            List<EventShortDto> eventShortDto = compilation.getEvents().stream()
+                    .map(EventMapper::mapToShortDto)
+                    .collect(Collectors.toList());
+            compilationDto.setEvents(statService.setViewsNumber(eventShortDto));
+        }
         return compilationDto;
     }
 

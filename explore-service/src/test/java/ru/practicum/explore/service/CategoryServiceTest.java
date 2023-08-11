@@ -10,7 +10,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import ru.practicum.explore.dto.category.CategoryDto;
 import ru.practicum.explore.exception.exceptions.CategoryExistsException;
 import ru.practicum.explore.exception.exceptions.CategoryNotFoundException;
-import ru.practicum.explore.exception.exceptions.EmailOrNameRegisteredException;
 import ru.practicum.explore.model.Category;
 import ru.practicum.explore.repository.CategoryRepository;
 
@@ -64,7 +63,7 @@ public class CategoryServiceTest {
     public void saveCategory_NameExists() {
         when(categoryRepository.save(any())).thenThrow(new DataIntegrityViolationException(""));
 
-        assertThrows(EmailOrNameRegisteredException.class, () -> categoryService.save(categoryToSave));
+        assertThrows(CategoryExistsException.class, () -> categoryService.save(categoryToSave));
     }
 
     @Test

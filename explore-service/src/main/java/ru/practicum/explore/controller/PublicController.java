@@ -75,7 +75,7 @@ public class PublicController {
         log.info("Searching events based on criteria: {}.", publicSearchCriteria);
         String requestIp = request.getRemoteAddr();
         String uri = request.getRequestURI();
-        List<EventShortDto> events = eventService.publicGetEvents(publicSearchCriteria, requestIp);
+        List<EventShortDto> events = eventService.publicGetEvents(publicSearchCriteria, requestIp, uri);
         log.info("Events found: {}", events);
         return events;
     }
@@ -109,7 +109,7 @@ public class PublicController {
     }
 
     @GetMapping("/compilations")
-        public List<CompilationDto> getCompilations(@RequestParam(defaultValue = "true") Boolean pinned,
+    public List<CompilationDto> getCompilations(@RequestParam(required = false) Boolean pinned,
                                                 @RequestParam(defaultValue = "0") Integer from,
                                                 @RequestParam(defaultValue = "10") Integer size) {
         log.info("Getting all compilations.");

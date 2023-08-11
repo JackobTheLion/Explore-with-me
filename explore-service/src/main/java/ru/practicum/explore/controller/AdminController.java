@@ -24,7 +24,6 @@ import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @Slf4j
@@ -139,7 +138,7 @@ public class AdminController {
         }
 
         if (start != null && end != null) {
-            if(start.isAfter(end)) {
+            if (start.isAfter(end)) {
                 log.info("Start date {} is after end date {}.", start, end);
                 throw new ValidationException(String.format("Start date %s is after end date %s.", start, end));
             }

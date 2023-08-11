@@ -55,7 +55,7 @@ public class StatService {
     public void addHit(String uri, String ip) {
         try {
             statsClient.addHit(uri, ip, LocalDateTime.now());
-        }  catch (FailToSaveHitException e) {
+        } catch (FailToSaveHitException e) {
             log.error("Hit was not saved. Reason: " + e.getMessage());
         }
     }

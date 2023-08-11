@@ -19,7 +19,6 @@ import ru.practicum.explore.model.*;
 import ru.practicum.explore.repository.*;
 
 import javax.transaction.Transactional;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -204,6 +203,11 @@ public class EventService {
         List<ParticipationRequest> requestsToUpdate = eventRequestRepository.findAllByIdIn(updateRequest.getRequestIds());
 
         Long confirmedRequests = eventRequestRepository.countAllByEventIdIsAndConfirmed(eventId, CONFIRMED);
+        if (!(event.getParticipantsLimit() == 0) && event.getParticipantsLimit().equals(confirmedRequests)) {
+            log.error("Participants limit for event id {} already reached", eventId);
+            throw new RequestCannotBeUpdatedException(String
+                    .format("Participants limit for event id %s already reached", eventId));
+        }
 
         List<ParticipationRequest> confirmed = new ArrayList<>();
         List<ParticipationRequest> rejected = new ArrayList<>();
@@ -279,7 +283,7 @@ public class EventService {
         return updatedEventDto;
     }
 
-    public List<EventShortDto> publicGetEvents(PublicSearchCriteria publicSearchCriteria, String ip) {
+    public List<EventShortDto> publicGetEvents(PublicSearchCriteria publicSearchCriteria, String ip, String uri) {
         log.info("Searching events based on criteria: {}.", publicSearchCriteria);
         List<Event> events = customEventRepository.findEventsPublic(publicSearchCriteria);
         log.info("Events found: {}.", events);
@@ -288,6 +292,7 @@ public class EventService {
                 .collect(Collectors.toList());
         statService.setViewsNumber(shortDto);
         setConfirmedRequests(shortDto);
+        statService.addHit(uri, ip);
         for (EventShortDto event : shortDto) {
             statService.addHit("/events/" + event.getId(), ip);
         }

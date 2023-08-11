@@ -24,7 +24,10 @@ public class EventMapper {
                 .state(PENDING)
                 .annotation(newEventDto.getAnnotation())
                 .build();
-        event.setPaid(newEventDto.getPaid() != null && newEventDto.getPaid());
+
+        if (newEventDto.getPaid() != null) {
+            event.setPaid(newEventDto.getPaid());
+        } else event.setPaid(false);
 
         return event;
     }

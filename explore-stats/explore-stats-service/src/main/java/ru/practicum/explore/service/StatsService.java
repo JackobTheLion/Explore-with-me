@@ -34,7 +34,7 @@ public class StatsService {
     }
 
     public List<EndpointHitResponseDto> getHits(LocalDateTime start, LocalDateTime end, List<String> uriList, Boolean unique) {
-        log.info("Getting hit from {} to {}. Unique {}", start, end, unique);
+        log.info("Getting hits from {} to {}. Unique {}", start, end, unique);
         List<EndpointHitResponseDto> hits;
         if (unique) {
             hits = getUniqueHits(start, end, uriList);
@@ -47,7 +47,7 @@ public class StatsService {
 
     private List<EndpointHitResponseDto> getUniqueHits(LocalDateTime start, LocalDateTime end, List<String> uriList) {
         List<EndpointHitResponseDto> hits;
-        if (uriList == null) {
+        if (uriList == null || uriList.isEmpty()) {
             log.info("Uri list is null");
             hits = statsRepository.getUniqueHits(start, end);
         } else {

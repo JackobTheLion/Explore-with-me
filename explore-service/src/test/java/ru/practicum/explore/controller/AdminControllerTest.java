@@ -2,7 +2,6 @@ package ru.practicum.explore.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,8 @@ import ru.practicum.explore.dto.category.CategoryDto;
 import ru.practicum.explore.dto.user.UserDto;
 import ru.practicum.explore.exception.ErrorHandler;
 import ru.practicum.explore.service.CategoryService;
+import ru.practicum.explore.service.CompilationService;
+import ru.practicum.explore.service.EventService;
 import ru.practicum.explore.service.UserService;
 
 import java.util.List;
@@ -27,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 @ContextConfiguration(classes = {AdminController.class, ErrorHandler.class})
-@Slf4j
 public class AdminControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
@@ -40,6 +40,12 @@ public class AdminControllerTest {
 
     @MockBean
     private CategoryService categoryService;
+
+    @MockBean
+    private CompilationService compilationService;
+
+    @MockBean
+    private EventService eventService;
 
     private UserDto userToSave;
     private UserDto savedUser;

@@ -86,12 +86,12 @@ public class UserServiceTest {
         List<UserDto> actualUsers = userService.findAll(List.of(1L), 0, 10);
 
         assertEquals(expectedUsers, actualUsers);
-        verify(userRepository, never()).findAll(any(PageRequest.class));
+        verify(userRepository, never()).findAllByOrderById(any(PageRequest.class));
     }
 
     @Test
     public void findAllUsers_withNulIds() {
-        when(userRepository.findAll(any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(savedUser)));
+        when(userRepository.findAllByOrderById(any(PageRequest.class))).thenReturn(new PageImpl<>(List.of(savedUser)));
 
         List<UserDto> expectedUsers = List.of(expectedUser);
 
