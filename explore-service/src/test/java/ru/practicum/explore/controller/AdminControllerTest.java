@@ -10,12 +10,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.practicum.explore.controller.category.CategoryAdminController;
+import ru.practicum.explore.controller.user.UserAdminController;
 import ru.practicum.explore.dto.category.CategoryDto;
 import ru.practicum.explore.dto.user.UserDto;
 import ru.practicum.explore.exception.ErrorHandler;
 import ru.practicum.explore.service.CategoryService;
-import ru.practicum.explore.service.CompilationService;
-import ru.practicum.explore.service.EventService;
 import ru.practicum.explore.service.UserService;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-@ContextConfiguration(classes = {AdminController.class, ErrorHandler.class})
+@ContextConfiguration(classes = {UserAdminController.class, CategoryAdminController.class, ErrorHandler.class})
 public class AdminControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
@@ -40,12 +40,6 @@ public class AdminControllerTest {
 
     @MockBean
     private CategoryService categoryService;
-
-    @MockBean
-    private CompilationService compilationService;
-
-    @MockBean
-    private EventService eventService;
 
     private UserDto userToSave;
     private UserDto savedUser;

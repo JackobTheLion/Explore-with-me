@@ -7,6 +7,7 @@ import ru.practicum.explore.client.StatsClient;
 import ru.practicum.explore.dto.EndpointHitResponseDto;
 import ru.practicum.explore.dto.event.EventFullDto;
 import ru.practicum.explore.dto.event.EventShortDto;
+import ru.practicum.explore.exception.exceptions.HitNotAddedException;
 import ru.practicum.explore.exceptions.FailToSaveHitException;
 
 import java.time.LocalDateTime;
@@ -57,6 +58,7 @@ public class StatService {
             statsClient.addHit(uri, ip, LocalDateTime.now());
         } catch (FailToSaveHitException e) {
             log.error("Hit was not saved. Reason: " + e.getMessage());
+            throw new HitNotAddedException("Could not add hit to statistics. Please contact administrator.");
         }
     }
 
@@ -69,5 +71,4 @@ public class StatService {
         }
         return hitMap;
     }
-
 }

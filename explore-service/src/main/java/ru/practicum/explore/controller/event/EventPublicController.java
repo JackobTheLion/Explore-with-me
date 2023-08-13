@@ -1,17 +1,13 @@
-package ru.practicum.explore.controller;
+package ru.practicum.explore.controller.event;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.explore.dto.category.CategoryDto;
-import ru.practicum.explore.dto.compilation.CompilationDto;
 import ru.practicum.explore.dto.event.EventFullDto;
 import ru.practicum.explore.dto.event.EventShortDto;
 import ru.practicum.explore.dto.search.PublicSearchCriteria;
 import ru.practicum.explore.dto.search.Sort;
-import ru.practicum.explore.service.CategoryService;
-import ru.practicum.explore.service.CompilationService;
 import ru.practicum.explore.service.EventService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,17 +20,15 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping()
+@RequestMapping("/events")
 @Validated
-public class PublicController {
+public class EventPublicController {
     private final EventService eventService;
-    private final CompilationService compilationService;
-    private final CategoryService categoryService;
 
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
-    @GetMapping("/events")
+    @GetMapping()
     public List<EventShortDto> getEvents(@RequestParam(required = false) String text,
                                          @RequestParam(required = false) List<Long> categories,
                                          @RequestParam(required = false) Boolean paid,
@@ -80,7 +74,7 @@ public class PublicController {
         return events;
     }
 
-    @GetMapping("/events/{id}")
+    @GetMapping("/{id}")
     public EventFullDto findEvent(@PathVariable @Min(1) Long id,
                                   HttpServletRequest request) {
         log.info("Looking for event id {}.", id);
@@ -89,40 +83,5 @@ public class PublicController {
         EventFullDto event = eventService.getEventPublic(id, requestIp, uri);
         log.info("Event found: {}.", event);
         return event;
-    }
-
-    @GetMapping("/categories")
-    public List<CategoryDto> getCategories(@RequestParam(defaultValue = "0") Integer from,
-                                           @RequestParam(defaultValue = "10") Integer size) {
-        log.info("Getting all categories.");
-        List<CategoryDto> categories = categoryService.findAllCategories(from, size);
-        log.info("Categories found: {}.", categories);
-        return categories;
-    }
-
-    @GetMapping("/categories/{catId}")
-    public CategoryDto findCategory(@PathVariable @Min(1) Long catId) {
-        log.info("Looking for category: {}.", catId);
-        CategoryDto category = categoryService.findCategory(catId);
-        log.info("Category found: {}.", category);
-        return category;
-    }
-
-    @GetMapping("/compilations")
-    public List<CompilationDto> getCompilations(@RequestParam(required = false) Boolean pinned,
-                                                @RequestParam(defaultValue = "0") Integer from,
-                                                @RequestParam(defaultValue = "10") Integer size) {
-        log.info("Getting all compilations.");
-        List<CompilationDto> compilations = compilationService.findAll(pinned, from, size);
-        log.info("Compilations found: {}.", compilations);
-        return compilations;
-    }
-
-    @GetMapping("/compilations/{compId}")
-    public CompilationDto getCompilation(@PathVariable @Min(1) Long compId) {
-        log.info("Looking for compilation id {}", compId);
-        CompilationDto compilation = compilationService.get(compId);
-        log.info("Compilation found: {}.", compilation);
-        return compilation;
     }
 }
