@@ -119,13 +119,13 @@ public class StatsServiceTest {
                 .build();
         hits.add(hit);
 
-        when(statsRepository.getUniqueHitsByUri(any(), any(), any())).thenReturn(hits);
+        when(statsRepository.getUniqueHits(any(), any())).thenReturn(hits);
 
         List<EndpointHitResponseDto> result = statsService.getHits(LocalDateTime.now().minusMonths(1),
                 LocalDateTime.now().minusMinutes(1), new ArrayList<>(), true);
 
         assertEquals(hits, result);
-        verify(statsRepository, times(1)).getUniqueHitsByUri(any(), any(), any());
+        verify(statsRepository, times(1)).getUniqueHits(any(), any());
     }
 
     @Test

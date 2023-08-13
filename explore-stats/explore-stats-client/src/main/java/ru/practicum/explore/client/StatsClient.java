@@ -61,7 +61,6 @@ public class StatsClient {
         log.info("Getting hits from {} to {} for uris: {}. Unique: {}", start, end, uris, unique);
         Map<String, Object> parameters = mapParameters(start, end, uris, unique);
         try {
-            //HttpEntity<List<EndpointHitResponseDto>> httpEntity = new HttpEntity<>(null);
             String getStatPath = "/stats?start={start}&end={end}&uris={uris}&unique={unique}";
             ResponseEntity<List<EndpointHitResponseDto>> response = rest.exchange(getStatPath, HttpMethod.GET, null,
                     new ParameterizedTypeReference<>() {

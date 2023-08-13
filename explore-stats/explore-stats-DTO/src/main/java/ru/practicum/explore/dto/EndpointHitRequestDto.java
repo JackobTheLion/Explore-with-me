@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.practicum.explore.validation.Ip;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,7 +23,6 @@ public class EndpointHitRequestDto {
     private String uri;
 
     @NotBlank(message = "IP cannot be blank")
-    @Ip(message = "Invalid IP")
     private String ip;
 
     @NotNull(message = "Timestamp cannot be blank")

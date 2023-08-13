@@ -44,9 +44,8 @@ public class StatsRepository {
                 "LEFT JOIN app as a ON eh.app_id = a.app_id WHERE eh.sent BETWEEN :start AND :end AND eh.uri " +
                 "IN (:uriList) GROUP BY a.app_name, eh.uri ORDER BY hits DESC";
 
-/*        String sql = "SELECT eh.app as app, eh.uri as uri, COUNT(eh.ip) as hits FROM endpoint_hit as eh WHERE " +
-                "eh.sent BETWEEN :start AND :end AND eh.uri IN (:uriList) GROUP BY eh.app, eh.uri ORDER BY hits DESC";*/
-        SqlParameterSource parameterSource = new MapSqlParameterSource("uriList", uriList)
+        SqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("uriList", uriList)
                 .addValue("start", start)
                 .addValue("end", end);
         List<EndpointHitResponseDto> allHits = namedParameterJdbcTemplate.query(sql, parameterSource, (rs, rowNum) ->

@@ -7,11 +7,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = IpValidator.class)
+@Constraint(validatedBy = EventDateValidator.class)
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Ip {
-    String message() default "Invalid phone number";
+public @interface StartDateValidation {
+    String message() default "Start date should be at least 2 hours later from now";
 
     Class<?>[] groups() default {};
 
