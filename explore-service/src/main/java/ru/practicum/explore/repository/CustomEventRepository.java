@@ -5,10 +5,10 @@ import org.springframework.stereotype.Repository;
 import ru.practicum.explore.dto.search.AdminSearchCriteria;
 import ru.practicum.explore.dto.search.PublicSearchCriteria;
 import ru.practicum.explore.exception.exceptions.AreaNotFoundException;
+import ru.practicum.explore.model.Area;
 import ru.practicum.explore.model.Event;
 import ru.practicum.explore.model.ParticipationRequest;
 import ru.practicum.explore.model.ParticipationRequestStatus;
-import ru.practicum.explore.model.Area;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -78,7 +78,7 @@ public class CustomEventRepository {
             predicates.add(onlyAvailable);
         }
 
-        if(publicSearchCriteria.getSearchArea() != null) {
+        if (publicSearchCriteria.getSearchArea() != null) {
             Area area = getSearchArea(publicSearchCriteria.getSearchArea());
 
             Join<Object, Object> location = root.join("location");

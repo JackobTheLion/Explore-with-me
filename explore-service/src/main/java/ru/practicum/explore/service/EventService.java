@@ -290,7 +290,7 @@ public class EventService {
         List<Event> events = customEventRepository.findEventsPublic(publicSearchCriteria);
         log.info("Events found: {}.", events);
 
-        if(events.isEmpty()) {
+        if (events.isEmpty()) {
             return new ArrayList<>();
         }
 
