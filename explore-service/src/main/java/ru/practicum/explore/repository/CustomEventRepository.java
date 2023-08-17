@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.practicum.explore.dto.search.AdminSearchCriteria;
 import ru.practicum.explore.dto.search.PublicSearchCriteria;
+import ru.practicum.explore.exception.exceptions.AreaNotFoundException;
 import ru.practicum.explore.model.Event;
 import ru.practicum.explore.model.ParticipationRequest;
 import ru.practicum.explore.model.ParticipationRequestStatus;
+import ru.practicum.explore.model.Area;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -21,6 +23,8 @@ import static ru.practicum.explore.mapper.EventState.PUBLISHED;
 public class CustomEventRepository {
 
     private final EntityManager entityManager;
+
+    private final AreaRepository areaRepository;
 
     public List<Event> findEventsPublic(PublicSearchCriteria publicSearchCriteria) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -74,6 +78,20 @@ public class CustomEventRepository {
             predicates.add(onlyAvailable);
         }
 
+        if(publicSearchCriteria.getSearchArea() != null) {
+            Area area = getSearchArea(publicSearchCriteria.getSearchArea());
+
+            Join<Object, Object> location = root.join("location");
+
+            Predicate withinRadius = builder.lessThanOrEqualTo(builder
+                            .function("distance", Float.class,
+                                    builder.literal(area.getLat()), builder.literal(area.getLon()),
+                                    location.get("lat"), location.get("lon")),
+                    builder.literal(area.getRadius()));
+
+            predicates.add(withinRadius);
+        }
+
         CriteriaQuery<Event> select = criteriaQuery.select(root).where(predicates.toArray(new Predicate[0]));
         TypedQuery<Event> typedQuery = entityManager.createQuery(select);
         typedQuery.setFirstResult(publicSearchCriteria.getFrom());
@@ -86,6 +104,7 @@ public class CustomEventRepository {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> criteriaQuery = builder.createQuery(Event.class);
         Root<Event> root = criteriaQuery.from(Event.class);
+
 
         List<Predicate> predicates = new ArrayList<>();
 
@@ -114,11 +133,30 @@ public class CustomEventRepository {
             predicates.add(rangeEnd);
         }
 
+        if (adminSearchCriteria.getSearchArea() != null) {
+            Area area = getSearchArea(adminSearchCriteria.getSearchArea());
+
+            Join<Object, Object> location = root.join("location");
+
+            Predicate withinRadius = builder.lessThanOrEqualTo(builder
+                            .function("distance", Float.class,
+                                    builder.literal(area.getLat()), builder.literal(area.getLon()),
+                                    location.get("lat"), location.get("lon")),
+                    builder.literal(area.getRadius()));
+
+            predicates.add(withinRadius);
+        }
+
         CriteriaQuery<Event> select = criteriaQuery.select(root).where(predicates.toArray(new Predicate[0]));
         TypedQuery<Event> typedQuery = entityManager.createQuery(select);
         typedQuery.setFirstResult(adminSearchCriteria.getFrom());
         typedQuery.setMaxResults(adminSearchCriteria.getSize());
 
         return typedQuery.getResultList();
+    }
+
+    private Area getSearchArea(Long id) {
+        return areaRepository.findById(id)
+                .orElseThrow(() -> new AreaNotFoundException(String.format("Search area id %s not found.", id)));
     }
 }

@@ -40,7 +40,7 @@ public class Event {
 
     private LocalDateTime eventDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id")
     private Location location;
 
@@ -71,9 +71,9 @@ public class Event {
                 ", createdOn=" + createdOn +
                 ", initiator=" + initiator +
                 ", title='" + title + '\'' +
-                ", annotation='" + annotation + '\'' +
+                ", annotation='" + annotation.substring(0, 20) + '\'' +
                 ", category=" + category +
-                ", description='" + description + '\'' +
+                ", description='" + description.substring(0, 20) + '\'' +
                 ", eventDate=" + eventDate +
                 ", location=" + location +
                 ", paid=" + paid +

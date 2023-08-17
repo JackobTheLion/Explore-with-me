@@ -10,12 +10,22 @@ import java.util.List;
 @Builder
 public class PublicSearchCriteria {
     private String text;
+
     private List<Long> categories;
+
     private Boolean paid;
+
     private LocalDateTime rangeStart;
+
     private LocalDateTime rangeEnd;
+
     private Boolean onlyAvailable;
+
     private Sort sort;
+
+    private Long searchArea;
+
     private Integer from;
+
     private Integer size;
 }

@@ -8,18 +8,22 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "categories")
-public class Category {
-
+@Table(name = "area")
+public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
+    @Column(name = "area_id")
     private Long id;
 
-    @Column(name = "category_name", unique = true)
-    private String name;
+    private String areaName;
+
+    private Float lat;
+
+    private Float lon;
+
+    private Float radius;
 }

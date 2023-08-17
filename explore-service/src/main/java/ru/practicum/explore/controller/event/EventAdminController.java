@@ -33,6 +33,7 @@ public class EventAdminController {
                                         @RequestParam(required = false) List<Long> categories,
                                         @RequestParam(required = false) String rangeStart,
                                         @RequestParam(required = false) String rangeEnd,
+                                        @RequestParam(required = false) Long searchArea,
                                         @RequestParam(defaultValue = "0") Integer from,
                                         @RequestParam(defaultValue = "10") Integer size) {
 
@@ -56,6 +57,7 @@ public class EventAdminController {
                 .users(users)
                 .states(states)
                 .categories(categories)
+                .searchArea(searchArea)
                 .from(from)
                 .size(size)
                 .rangeStart(start)
