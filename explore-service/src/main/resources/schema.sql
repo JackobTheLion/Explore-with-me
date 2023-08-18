@@ -21,7 +21,8 @@ create table if not exists area (
     area_name VARCHAR(120) not null,
     lat float not null,
     lon float not null,
-    radius integer
+    radius integer,
+    area_status VARCHAR(6)
 );
 
 create table if not exists events (

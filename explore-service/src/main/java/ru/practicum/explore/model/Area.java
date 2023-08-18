@@ -26,4 +26,7 @@ public class Area {
     private Float lon;
 
     private Float radius;
+
+    @Enumerated(EnumType.STRING)
+    private AreaStatus areaStatus = AreaStatus.OPEN;
 }

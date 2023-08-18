@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.context.ActiveProfiles;
 import ru.practicum.explore.model.User;
 
 import java.util.ArrayList;
@@ -22,7 +21,8 @@ public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @BeforeEach
+*/
+/*    @BeforeEach
     public void beforeEach() {
         for (int i = 1; i < 3; i++) {
             User userToSave = User.builder()
@@ -50,8 +50,7 @@ public class UserRepositoryTest {
         List<User> actualUsers = userRepository.findByIdInOrderById(List.of(1L, 2L), page).getContent();
 
         assertEquals(expectedUsers, actualUsers);
-    }
-
+    }*//*
 
 }
 */

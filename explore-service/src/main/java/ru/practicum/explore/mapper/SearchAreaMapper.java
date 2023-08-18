@@ -1,7 +1,8 @@
 package ru.practicum.explore.mapper;
 
-import ru.practicum.explore.dto.search.AreaDtoRequest;
-import ru.practicum.explore.dto.search.AreaDtoResponse;
+import ru.practicum.explore.dto.area.AreaDtoRequest;
+import ru.practicum.explore.dto.area.AreaDtoResponseAdmin;
+import ru.practicum.explore.dto.area.AreaDtoResponsePublic;
 import ru.practicum.explore.model.Area;
 
 public class SearchAreaMapper {
@@ -14,8 +15,19 @@ public class SearchAreaMapper {
                 .build();
     }
 
-    public static AreaDtoResponse mapToDto(Area area) {
-        return AreaDtoResponse.builder()
+    public static AreaDtoResponseAdmin mapToAdminDto(Area area) {
+        return AreaDtoResponseAdmin.builder()
+                .id(area.getId())
+                .areaName(area.getAreaName())
+                .lat(area.getLat())
+                .lon(area.getLon())
+                .radius(area.getRadius())
+                .areaStatus(area.getAreaStatus())
+                .build();
+    }
+
+    public static AreaDtoResponsePublic mapToPublicDto(Area area) {
+        return AreaDtoResponsePublic.builder()
                 .id(area.getId())
                 .areaName(area.getAreaName())
                 .lat(area.getLat())
