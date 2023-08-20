@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/admin/areas")
 @Validated
-public class AdminAreaController {
+public class AreaAdminController {
 
     private final AreaService areaService;
 

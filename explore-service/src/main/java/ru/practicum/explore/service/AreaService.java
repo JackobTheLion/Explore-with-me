@@ -55,11 +55,11 @@ public class AreaService {
         }
 
         if (areaDtoRequest.getLat() != null) {
-            areaToUpdate.setLat(areaToUpdate.getLat());
+            areaToUpdate.setLat(areaDtoRequest.getLat());
         }
 
         if (areaDtoRequest.getLon() != null) {
-            areaToUpdate.setLon(areaToUpdate.getLon());
+            areaToUpdate.setLon(areaDtoRequest.getLon());
         }
 
         if (areaDtoRequest.getRadius() != null) {

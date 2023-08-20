@@ -5,30 +5,33 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.explore.model.AreaStatus;
-import ru.practicum.explore.validation.ValidationGroups;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
-import static ru.practicum.explore.validation.ValidationGroups.*;
+import static ru.practicum.explore.validation.ValidationGroups.Create;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class AreaDtoRequest {
-    @NotNull(groups = Create.class)
+    @NotBlank(groups = Create.class)
     @Size(max = 120)
     private String areaName;
 
     @NotNull(groups = Create.class)
+    @Min(-90)
+    @Max(90)
     private Float lat;
 
     @NotNull(groups = Create.class)
+    @Min(-180)
+    @Max(180)
     private Float lon;
 
     @NotNull(groups = Create.class)
+    @Positive
     private Float radius;
 
-    private AreaStatus areaStatus;
+    private AreaStatus areaStatus = AreaStatus.OPEN;
 }

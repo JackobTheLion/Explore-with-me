@@ -13,6 +13,7 @@ import ru.practicum.explore.model.ParticipationRequestStatus;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class CustomEventRepository {
 
     private final AreaRepository areaRepository;
 
+    @Transactional
     public List<Event> findEventsPublic(PublicSearchCriteria publicSearchCriteria) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> criteriaQuery = builder.createQuery(Event.class);

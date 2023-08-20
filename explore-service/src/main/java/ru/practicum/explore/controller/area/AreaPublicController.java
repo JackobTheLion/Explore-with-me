@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.explore.dto.area.AreaDtoResponsePublic;
-import ru.practicum.explore.model.AreaStatus;
 import ru.practicum.explore.service.AreaService;
 
 import javax.validation.constraints.Min;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/areas")
 @Validated
-public class PublicAreaController {
+public class AreaPublicController {
 
     private final AreaService areaService;
 

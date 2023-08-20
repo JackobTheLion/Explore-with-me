@@ -12,6 +12,7 @@ public class SearchAreaMapper {
                 .lat(areaDtoRequest.getLat())
                 .lon(areaDtoRequest.getLon())
                 .radius(areaDtoRequest.getRadius())
+                .areaStatus(areaDtoRequest.getAreaStatus())
                 .build();
     }
 
