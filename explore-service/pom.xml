@@ -25,7 +25,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.example</groupId>
+            <groupId>ru.practicum</groupId>
             <artifactId>explore-stats-client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
