@@ -299,9 +299,7 @@ public class EventService {
                 .collect(Collectors.toList());
         statService.setViewsNumber(shortDto);
         setConfirmedRequests(shortDto);
-        for (EventShortDto event : shortDto) {
-            statService.addHit("/events/" + event.getId(), ip);
-        }
+        statService.addHit("/events", ip);
         if (publicSearchCriteria.getSort() == Sort.VIEWS) {
             return shortDto.stream().sorted(Comparator.comparingInt(EventShortDto::getViews)).collect(Collectors.toList());
         } else {
