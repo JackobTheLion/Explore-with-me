@@ -20,6 +20,8 @@ public class AdminSearchCriteria {
 
     private LocalDateTime rangeEnd;
 
+    private Long searchArea;
+
     private Integer from;
 
     private Integer size;

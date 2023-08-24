@@ -45,6 +45,8 @@ public class EventService {
 
     private final CustomEventRepository customEventRepository;
 
+    private final AreaRepository areaRepository;
+
     private final StatService statService;
 
     public EventFullDto save(NewEventDto newEventDto, Long userId) {
@@ -287,15 +289,17 @@ public class EventService {
         log.info("Searching events based on criteria: {}.", publicSearchCriteria);
         List<Event> events = customEventRepository.findEventsPublic(publicSearchCriteria);
         log.info("Events found: {}.", events);
+
+        if (events.isEmpty()) {
+            return new ArrayList<>();
+        }
+
         List<EventShortDto> shortDto = events.stream()
                 .map(EventMapper::mapToShortDto)
                 .collect(Collectors.toList());
         statService.setViewsNumber(shortDto);
         setConfirmedRequests(shortDto);
-        statService.addHit(uri, ip);
-        for (EventShortDto event : shortDto) {
-            statService.addHit("/events/" + event.getId(), ip);
-        }
+        statService.addHit("/events", ip);
         if (publicSearchCriteria.getSort() == Sort.VIEWS) {
             return shortDto.stream().sorted(Comparator.comparingInt(EventShortDto::getViews)).collect(Collectors.toList());
         } else {

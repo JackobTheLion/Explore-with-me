@@ -34,7 +34,7 @@ public class StatsService {
     }
 
     public List<EndpointHitResponseDto> getHits(LocalDateTime start, LocalDateTime end, List<String> uriList, Boolean unique) {
-        log.info("Getting hits from {} to {}. Unique {}", start, end, unique);
+            log.info("Getting hits from {} to {}. Unique {}", start, end, unique);
         List<EndpointHitResponseDto> hits;
         if (unique) {
             hits = getUniqueHits(start, end, uriList);

@@ -34,6 +34,7 @@ public class EventPublicController {
                                          @RequestParam(required = false) Boolean paid,
                                          @RequestParam(required = false) String rangeStart,
                                          @RequestParam(required = false) String rangeEnd,
+                                         @RequestParam(required = false) Long searchArea,
                                          @RequestParam(defaultValue = "false") Boolean onlyAvailable,
                                          @RequestParam(defaultValue = "EVENT_DATE") Sort sort,
                                          @RequestParam(defaultValue = "0") Integer from,
@@ -60,7 +61,10 @@ public class EventPublicController {
                 .text(text)
                 .categories(categories)
                 .paid(paid)
+                .searchArea(searchArea)
                 .onlyAvailable(onlyAvailable)
+                .rangeStart(start)
+                .rangeEnd(end)
                 .sort(sort)
                 .from(from)
                 .size(size)
