@@ -1,7 +1,10 @@
 package ru.practicum.explore.dto.area;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.practicum.explore.model.AreaStatus;
 
 @Data

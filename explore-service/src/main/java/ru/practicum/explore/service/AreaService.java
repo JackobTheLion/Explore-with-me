@@ -86,7 +86,7 @@ public class AreaService {
     public AreaDtoResponsePublic getAreaPublic(Long areaId) {
         log.info("Looking for area id: {}", areaId);
         Area area = areaRepository.findByIdAndAreaStatus(areaId, AreaStatus.OPEN).orElseThrow(() -> {
-            log.info("Area id {} not found.", areaId);
+            log.error("Area id {} not found.", areaId);
             return new AreaNotFoundException(String.format("Area id %s not found.", areaId));
         });
         log.info("Area found: {}.", area);
@@ -95,7 +95,7 @@ public class AreaService {
 
     private Area getArea(Long areaId) {
         return areaRepository.findById(areaId).orElseThrow(() -> {
-            log.info("Area id {} not found.", areaId);
+            log.error("Area id {} not found.", areaId);
             return new AreaNotFoundException(String.format("Area id %s not found.", areaId));
         });
     }
