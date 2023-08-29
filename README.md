@@ -1,4 +1,4 @@
-# :handshake: Explore with me \
+# :handshake: Explore with me
 _Дипломный проект._
 
 ### :question: Что это?
