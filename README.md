@@ -23,7 +23,7 @@ API основного сервиса состоит из трех частей:
 2. Библиотека клиента сервиса статистики для отправки и получения статистики 
 3. Библиотека DTO
 
-![Схема модулей приложения]([info/Explore with me.jpg](https://github.com/JackobTheLion/java-explore-with-me/blob/readmed_add/info/Explore%20with%20me.jpg))
+![Схема модулей приложения](https://github.com/JackobTheLion/java-explore-with-me/blob/readmed_add/info/Explore%20with%20me.jpg)
 
 ___
 
