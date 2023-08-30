@@ -69,60 +69,7 @@ ___
 ___
 ### :page_with_curl: Инструкция по запуску:
 1. Скачать проект
-2. По умолчанию приложение работает на порту 8080 (основной сервис) и 9090 (сервис статистики). \
-docker-compose по-умолчанию:
-``` dockerfile
-version: '3.1'
-services:
-  stats-server:
-    build: explore-stats/explore-stats-service
-    image: explore-stats-service
-    container_name: explore-stats-service
-    ports:
-      - "9090:9090"
-    depends_on:
-      - stats-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/explorestats
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-
-  stats-db:
-    image: postgres:14-alpine
-    container_name: explore-stats-db
-    ports:
-      - "6543:5432"
-    environment:
-      - POSTGRES_DB=explorestats
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-
-  ewm-service:
-    build: explore-service
-    image: explore-main
-    container_name: explore-main
-    ports:
-      - "8080:8080"
-    depends_on:
-      - main-db
-      - stats-server
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://main-db:5432/exploremain
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - APP_NAME=main-app
-      - STAT_SERVER_URL=http://stats-server:9090
-
-  main-db:
-    image: postgres:14-alpine
-    container_name: explore-main-db
-    ports:
-      - "6544:5432"
-    environment:
-      - POSTGRES_DB=exploremain
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-```
+2. По умолчанию приложение работает на порту 8080 (основной сервис) и 9090 (сервис статистики).
 3. Собрать проект:
 ```shell
 docker compose build
